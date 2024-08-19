@@ -122,7 +122,7 @@ class _SideBarAnimatedState extends State<SideBarAnimated>
   Widget build(BuildContext context) {
     _height = MediaQuery.sizeOf(context).height;
     _width = MediaQuery.sizeOf(context).width;
-
+    final isStatusBarAvailable = MediaQuery.of(context).padding.top > 0;
     ///using animated container for the side bar for smooth responsive
     return AnimatedContainer(
       curve: widget.curve,
@@ -153,7 +153,7 @@ class _SideBarAnimatedState extends State<SideBarAnimated>
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.only(
-                  top: 40,
+                  top: isStatusBarAvailable ? 20 : 40,
                   left: _width >= widget.widthSwitch && !_minimize ? 20 : 18,
                   right: _width >= widget.widthSwitch && !_minimize ? 20 : 18,
                   bottom: 24),
@@ -201,7 +201,7 @@ class _SideBarAnimatedState extends State<SideBarAnimated>
                           itemCount: widget.sidebarItems.length,
                         ),
                         AnimatedAlign(
-                          alignment: Alignment(0, -1 - (-0.152 * _itemIndex)),
+                          alignment: Alignment(0, (isStatusBarAvailable ? -0.940 : -1) - (-0.152 * _itemIndex)),
                           duration: widget.floatingAnimationDuration,
                           curve: widget.curve,
                           child: Container(
